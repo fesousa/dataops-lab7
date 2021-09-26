@@ -56,6 +56,6 @@ if __name__ == "__main__":
     print("Total number of records: " + str(vacinas.count()))
 
     # SALVAR NO S3 NO FORMATO PARQUET
-    vacinas.write.parquet(sys.argv[2])
+    vacinas.write.mode("overwrite").parquet(sys.argv[2])
 
 # spark-submit spark-etl-vacinas.py s3://dataops-impacta-dados-fernandosousa/input/ s3://dataops-impacta-dados-fernandosousa/output/spark
