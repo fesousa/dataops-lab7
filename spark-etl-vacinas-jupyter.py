@@ -4,6 +4,11 @@ from datetime import datetime
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
+input_path = "s3://dataops-impacta-dados-fernandosousa/input/"
+output_path = "s3://dataops-impacta-dados-fernandosousa/output/jupyter_spark"
+
+
+
 if __name__ == "__main__":
 
     # INICIAR SESSÃO SPARK
@@ -53,7 +58,7 @@ if __name__ == "__main__":
 
     print(vacinas.head())
 
-    print("Quantidade de registros: " + str(vacinas.count()))
+    print("Total number of records: " + str(vacinas.count()))
 
     # SALVAR NO S3 NO FORMATO PARQUET
     vacinas.write.mode("overwrite").parquet(sys.argv[2])
