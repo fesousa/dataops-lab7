@@ -214,7 +214,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
     4.6. Veja se o arquivo `spark-etl-vacinas.py` está na pasta com o comando `ls`
 
-    <img src="images/Imagem40.png" height='150'/>
+    <img src="images/Imagem41.png" height='150'/>
 
 
     4.7. Execute o script pyspark `spark-etl-vacinas.py` com o comando `spark-submit`:
@@ -237,11 +237,11 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 O Apache Hive é um data warehouse e pacote analítico de código aberto. Ele facilita a leitura, escrita e gerenciamento de grandes bases de dados em armazenamento distribuídos como o Hadoop. O Hive abstrai as cargas de trabalho que utilizam Spark e MapReduce, a partir de comando SQLike (HiveQL). Com o Hive instalado no EMR é possível aproveitar as bases de dados e tabelas do catálogo de dados do Glue (Glue data catalog). Essa configuração foi feita na criação do cluster EMR. Assim podemos criar um datalake a partir de di-versas fontes de dados utilizando o Crawler e o Data Catalog do Glue, e fazer uma consulta em todas essas bases utilizando o Hive no EMR.
 
 
-<img src="images/Imagem41.png" height='150'/>
+<img src="images/Imagem42.png" height='150'/>
 
 1. Ainda no CloudShell e conectado no cluster do EMR execute o CLI do Hive com o comando `hive;` 
 
-<img src="images/Imagem42.png" height='150'/>
+<img src="images/Imagem43.png" height='150'/>
 
 2. Dentro do Hive execute o comando abaixo para listar as bases de dados. Você deverá ver a base `vacinas_database`, criada no Glue. Se não vir a base, verifique se a base existe no Glue. Se precisar recriar, consulte o [Laboratório 6](https://github.com/fesousa/dataops-lab6).
 
@@ -249,7 +249,7 @@ O Apache Hive é um data warehouse e pacote analítico de código aberto. Ele fa
 show databases;
 ```
 
-<img src="images/Imagem43.png" height='150'/>
+<img src="images/Imagem44.png" height='120'/>
 
 
 3.	Abra a base `vacinas_database`:
@@ -258,7 +258,7 @@ show databases;
 use vacinas_database;
 ```
 
-<img src="images/Imagem44.png" height='150'/>
+<img src="images/Imagem45.png" height='150'/>
 
 4. Agora você pode executar consultas SQL nas tabelas mapeadas no Glue, que podem vir de diferentes origens (S3, RDS, Redshift, MongoDB, DocumentDB, Kafka, etc), utilizando o processamento distribuído do Hadoop no EMR. Por exemplo, consultar a quantidade de registros na tabela `vacinas_input`, que foi criada a partir do arquivo csv no S3.
 
@@ -266,7 +266,7 @@ use vacinas_database;
 select count(1) from vacinas_input;
 ```
 
-<img src="images/Imagem45.png" height='150'/>
+<img src="images/Imagem46.png" height='150'/>
 
 Ou então consultar quantos registros existem por UF:
 
@@ -274,7 +274,7 @@ Ou então consultar quantos registros existem por UF:
 select estabelecimento_uf, count(1) from vacinas_input group by estabelecimento_uf;
 ```
 
-<img src="images/Imagem46.png" height='150'/>
+<img src="images/Imagem47.png" height='250'/>
 
 
 5.	Por estar utilizando o Data Catalog do Glue, quando os dados mudam na origem, a consulta em qualquer outra ferramenta que utiliza o catálogo, vai retornar os dados atualizados. Faça o teste:
@@ -282,6 +282,15 @@ select estabelecimento_uf, count(1) from vacinas_input group by estabelecimento_
     5.1. Execute a função lambda de coleta criada no [Laboratório 4](https://github.com/fesousa/dataops-lab4) para coletar os dados de Roraima (RR) deste link: https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/SIPNI/COVID/uf/uf%3DRR/part-00000-a02ab466-c323-4420-85f1-e51e77685fe4.c000.csv. Consulte o  [Laboratório 4](https://github.com/fesousa/dataops-lab4) para relembrar como enviar os parâmetros.
 
     5.2. Quando a função terminar, volte ao CloudShell para executar novamente a última consulta (quantidade de registros por UF) e veja o novo resultado, com os dados de Roraima.
+
+
+## Utilizar EMR Steps para executar tarefas de Spark e Hive
+
+O EMR consegue ser programado para executar etapas de operações de ETL a partir de códigos que estão no S3 
+
+1.	Crie um novo script HiveQL para executar no Hive
+
+    a.	No VSCode adicione um novo arquivo chamado `hive_consulta_vacinas.hql` na pasta lab7 com o seguinte código de HiveQL. Ele deve estar na mesma pasta do arquivo spark-etl-vacinas.py para podermos enviar para o repositório do Github.
 
 
 
