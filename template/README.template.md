@@ -157,6 +157,79 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
     <img src="images/Imagem38.png" height='300'/>
  
 
+## Executar ETL com Spark no EMR
+
+1.	No VS Code, crie uma pasta lab7 na sua pasta de projetos da disciplina
+
+2.	Na pasta lab7 crie um arquivo chamado `spark-etl-vacinas.py` e coloque o código abaixo. É um código python que utiliza o pyspark para fazer um processo de ETL com os dados de vacinas que estão no S3:
+    
+    2.1. Lê os dados de vacinas do S3 (extract)
+
+    2.2. Faz transformações nos dados (seleciona colunas, renomeia colunas e faz a conta-gem dos dados agrupados - transform)
+
+    2.3. Dalva os dados transformados no formato parquet no S3 (load)
+
+    https://github.com/fesousa/dataops-lab7/blob/854f30cbcf24cf53d327b78d7789fc3424d1ba8b/spark-etl-vacinas.py#L1-L59
+
+3.	Crie um novo repositório (dataops-lab7) no seu Github e envie o arquivo para o repositório na branch principal (lembre-se dos passos seguidos em labs anteriores)
+
+4.	Volte ao CloudShell, onde está conectado no EMR e faça o seguinte:
+
+    4.1. Verifique se a conexão ainda está ativa. Se não, abra o CloudShell novamente e reconecte no EMR como fizemos anteriormente neste laboratório
+
+    4.2. Já conectado no EMR, instale o Git
+
+    ```bash
+    yum install git
+    ```
+
+    4.3. Verifique a instalação do git
+
+    ```bash
+    git –version
+    ```
+
+    Você deve ver a versão do Git no console do CloudShell
+
+    <img src="images/Imagem39.png" height='120'/>
+
+    4.4. Faça o clone do repositório criado neste laboratório
+
+    ```bash
+    git clone <url-repositorio>
+    ```
+
+    Se você criou um repositório privado, será necessário a autenticação. Para isso, é preciso criar um token quando for solicitada a senha no console do AWS CloudShell. Siga essa documentação para criar o token: https://docs.github.com/pt/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token. O nome do usuário é o mesmo usuário do seu git. 
+
+    <img src="images/Imagem40.png" height='250'/>
+
+
+    4.5. Acesse a pasta do repositório clonado
+
+    ```bash
+    cd dataops-lab7
+    ```
+
+    Se criou o repositório com outro nome, a pasta estará diferente no seu EMR 
+
+    4.6. Veja se o arquivo `spark-etl-vacinas.py` está na pasta com o comando `ls`
+
+    <img src="images/Imagem40.png" height='150'/>
+
+
+    4.7. Execute o script pyspark `spark-etl-vacinas.py` com o comando `spark-submit`:
+
+    ```bash
+    spark-submit spark-etl-vacinas.py s3://dataops-dados-nomesobrenome/input/ s3://dataops-impacta-dados-nomesobrenome/output/spark
+    ```
+
+    Lembre-se de trocar `dataops-dados-nomesobrenome` pelo seu bucket de dados (bucket criado no [Laboratório 1](https://github.com/fesousa/dataops-lab1)). Os caminhos de bucket s3 que vem depois do nome do arquivo são os parâmetros do script. O primeiro é a origem dos dados (arquivo CSV com dados brutos) e o segundo é o destino (arquivo parquet transformado). Esses parâmetros são recebidos na variável `sys.argv` no código criado. Volte ao código e identifique o uso.
+
+    4.8. Verifique se a execução completou corretamente 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Verifique o log de execução no console do CloudShell e veja se não houve nenhuma exceção
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Abra o bucket do S3 e veja se a pasta output/spark/ foi criada com o conteúdo do parquet
 
 
 
