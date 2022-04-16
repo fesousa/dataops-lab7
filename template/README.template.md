@@ -53,7 +53,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 7. Em <img src="images/Imagem11.png" height='25'/> selecione as duas opções disponíveis para importar o catálogo de dados do Glue
 
-<img src="images/Imagem10.png" height='200'/>
+<img src="images/Imagem12.png" height='200'/>
 
 <div class="footer">
     &copy; 2022 Fernando Sousa
