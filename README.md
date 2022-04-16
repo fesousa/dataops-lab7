@@ -78,7 +78,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 13.	 Aguarde até que o cluster seja criado, quando o status estiver mostrando `Aguardando`. Clique em <img src="images/Imagem20.png" height='25'/> no canto superior direito, de vez em quando, para atualizar. O processo pode levar até 20 minutos.
 
-<img src="images/Imagem21.png" height='200'/>
+<img src="images/Imagem21.png" height='300'/>
 
 14.	Enquanto o cluster inicia vamos configurar o grupo de segurança para poder acessar a instância principal do cluster EMR a partir de uma conexão SSH no CloudShell
 
@@ -124,19 +124,19 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 15.	Volte para o EMR e veja se já está com o status `Aguardando`
 
-<img src="images/Imagem33.png" height='180'/>
+<img src="images/Imagem33.png" height='120'/>
  
 16.	Para finalizar, conecte na instância utilizando o CloudShell. Siga os passos abaixo, se ficar alguma dúvida consulte o [Laboratório 4](https://github.com/fesousa/dataops-lab4) para mais detalhes
 
     16.1. Ainda no EMR, copie o endereço da propriedade `DNS público principal`. Deve ser algo parecido com o seguinte: `ec2-52-55-234-193.compute-1.amazonaws.com`
 
-    <img src="images/Imagem34.png" height='180'/>
+    <img src="images/Imagem34.png" height='250'/>
  
     16.2. No console da AWS acesse ao CloudShell clicando em <img src="images/Imagem35.png" height='25'/> na barra superior
 
     16.3. Aguarde o terminal ser iniciado e verifique se o arquivo `labsuser.pem` existe executando o comando `ls`
 
-    <img src="images/Imagem36.png" height='150'/>
+    <img src="images/Imagem36.png" height='130'/>
  
     Caso não tenha o arquivo, veja no [Laboratório 4](https://github.com/fesousa/dataops-lab4)como fazer o upload.
 
@@ -150,11 +150,11 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
     16.5. Depois de executado o comando, digite `yes` para confirma a conexão
 
-    <img src="images/Imagem37.png" height='200'/>
+    <img src="images/Imagem37.png" height='170'/>
  
     16.6. Você deverá ver o seguinte no CloudShell
 
-    <img src="images/Imagem38.png" height='200'/>
+    <img src="images/Imagem38.png" height='300'/>
  
 
 
