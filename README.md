@@ -124,7 +124,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 15.	Volte para o EMR e veja se já está com o status `Aguardando`
 
-<img src="images/Imagem33.png" height='120'/>
+<img src="images/Imagem33.png" height='80'/>
  
 16.	Para finalizar, conecte na instância utilizando o CloudShell. Siga os passos abaixo, se ficar alguma dúvida consulte o [Laboratório 4](https://github.com/fesousa/dataops-lab4) para mais detalhes
 
@@ -229,7 +229,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Verifique o log de execução no console do CloudShell e veja se não houve nenhuma exceção
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Abra o bucket do S3 e veja se a pasta output/spark/ foi criada com o conteúdo do parquet
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Abra o bucket do S3 e veja se a pasta `output/spark/` foi criada com o conteúdo do parquet
 
 
 
