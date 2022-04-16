@@ -241,7 +241,7 @@ O Apache Hive é um data warehouse e pacote analítico de código aberto. Ele fa
 
 1. Ainda no CloudShell e conectado no cluster do EMR execute o CLI do Hive com o comando `hive;` 
 
-<img src="images/Imagem43.png" height='150'/>
+<img src="images/Imagem43.png" height='110'/>
 
 2. Dentro do Hive execute o comando abaixo para listar as bases de dados. Você deverá ver a base `vacinas_database`, criada no Glue. Se não vir a base, verifique se a base existe no Glue. Se precisar recriar, consulte o [Laboratório 6](https://github.com/fesousa/dataops-lab6).
 
@@ -249,7 +249,7 @@ O Apache Hive é um data warehouse e pacote analítico de código aberto. Ele fa
 show databases;
 ```
 
-<img src="images/Imagem44.png" height='120'/>
+<img src="images/Imagem44.png" height='130'/>
 
 
 3.	Abra a base `vacinas_database`:
@@ -258,7 +258,7 @@ show databases;
 use vacinas_database;
 ```
 
-<img src="images/Imagem45.png" height='150'/>
+<img src="images/Imagem45.png" height='130'/>
 
 4. Agora você pode executar consultas SQL nas tabelas mapeadas no Glue, que podem vir de diferentes origens (S3, RDS, Redshift, MongoDB, DocumentDB, Kafka, etc), utilizando o processamento distribuído do Hadoop no EMR. Por exemplo, consultar a quantidade de registros na tabela `vacinas_input`, que foi criada a partir do arquivo csv no S3.
 
@@ -266,7 +266,7 @@ use vacinas_database;
 select count(1) from vacinas_input;
 ```
 
-<img src="images/Imagem46.png" height='150'/>
+<img src="images/Imagem46.png" height='250'/>
 
 Ou então consultar quantos registros existem por UF:
 
