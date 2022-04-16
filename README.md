@@ -39,14 +39,21 @@ Amazon EMR é o serviço da AWS que provisiona Hadoop MapReduce e outras soluç�
 6.	Em <img src="images/Imagem5.png" height='25'/> selecione as opções:
 
     a. <img src="images/Imagem6.png" height='25'/>	  
+
     b. <img src="images/Imagem7.png" height='25'/>
+
     c. <img src="images/Imagem8.png" height='25'/>
+
     d. <img src="images/Imagem9.png" height='25'/>
 
 Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que a versão seja diferente
 
 <img src="images/Imagem10.png" height='200'/>
 
+
+7. Em <img src="images/Imagem11.png" height='25'/> selecione as duas opções disponíveis para importar o catálogo de dados do Glue
+
+<img src="images/Imagem10.png" height='200'/>
 
 <div class="footer">
     &copy; 2022 Fernando Sousa
