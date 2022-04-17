@@ -290,9 +290,88 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
 
 1.	Crie um novo script HiveQL para executar no Hive
 
-    a.	No VSCode adicione um novo arquivo chamado `hive_consulta_vacinas.hql` na pasta lab7 com o seguinte código de HiveQL. Ele deve estar na mesma pasta do arquivo spark-etl-vacinas.py para podermos enviar para o repositório do Github.
+    1.1. No VSCode adicione um novo arquivo chamado `hive_consulta_vacinas.hql` na pasta lab7 com o seguinte código de HiveQL. Ele deve estar na mesma pasta do arquivo spark-etl-vacinas.py para podermos enviar para o repositório do Github.
 
 
+    https://github.com/fesousa/dataops-lab7/blob/f8a7ecf826b17a927b9aa9708665bf04210fca90/hive_consulta_vacinas.hql#L1-L37
+
+
+    O script HQL faz o seguinte:
+    •	Aponta para o a base `vacinas_database`, criada no Glue e configurada durante a criação do EMR para ser utilizada no Hive
+
+    •	Remove a tabela do Hive `vacinas_dynamo`, caso exista, que contém os dados de contagem de vacinas por estado e por data, processados pelo Hive
+
+    •	Cria a tabela `vacinas_dynamo`, com os dados de contagem de vacinas por estado e por data, processados pelo Hive. Essa é uma tabela virtual que aponta para a tabela `vacinas_uf_data` no DynamoDB
+
+    •	Insere dados de contagem de vacinas agrupados por UF e data de aplicação na tabela `vacinas_dynamo` e por consequência na tabela `vacinas_uf_data` do DynamoDB, a partir dos dados processados da tabela `vacinas_input`. Essa, por usa vez, lê os dados do S3, que estão mapeados no Data Catalog do Glue. A tabela contém três colunas: `data_aplicacao`, `quantidade_ac` e `quantidade_rr` (quantidade em cada UF por data de aplicação)
+
+
+2.	Envie para o repositório `dataops-lab7` as alterações feitas nessa pasta
+
+3.	Crie uma nova tabela no DynamoDB com as seguintes características. Relembre o que aprendeu na disciplina de Engenharia de dados:
+
+    3.1. Nome da tabela: `vacinas_uf_data`
+
+    3.2. Chave de partição: `data_aplicacao`
+
+4.	Crie um CodePipeline com as seguintes características (relembre o que já estudamos anteriormente)
+
+    4.1. Defina um nome intuitivo para o pipeline
+
+    4.2. Configure a Função de Serviço adequada
+
+    4.3. A origem do código deve ser o repositório `dataops-lab7`, criado neste laboratório
+
+    4.4. Não tem etapa de compilação
+
+    4.5. Na etapa de Implantação escolha Amazon S3
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Escolha o bucket de deploy criado na disciplina
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Em chave do objeto coloque deploy-emr. Essa será a pasta do S3 onde o arquivo será colocado
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Selecione a opção <img src="images/Imagem49.png" height='30'/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;4.6. Depois de executado o pipeline verifique os objetos no bucket S3 de deploy, dentro da pasta `deploy-emr`
+
+&nbsp;&nbsp;&nbsp;&nbsp;4.7. Se precisar relembrar alguma coisa do CodePipeline, verifique o [Laboratório 3](https://github.com/fesousa/dataops-lab3)
+
+5. Volte para o serviço EMR
+
+6. Abra o cluster criado (ClusterVacinas)
+
+7. Selecione a aba <img src="images/Imagem50.png" height='25'/>
+
+8. Clique em <img src="images/Imagem51.png" height='25'/>
+
+9.	No popup configure a etapa como na imagem abaixo e clique em <img src="images/Imagem52.png" height='25'/>. Para o campo `Argumentos` coloque o seguinte comando para executar o código spark a partir do arquivo no S3. Não esqueça de trocar o nome do bucket pelo seu bucket.
+
+```bash
+spark-submit s3://deploy-nomesobrenome-idconta-us-east-1/deploy-emr/spark-etl-vacinas.py s3://dataops-dados-nomesobrenome/input/ s3://dataops-dados-nomesobrenome/output/spark
+```
+
+<img src="images/Imagem53.png" height='250'/>
+
+10.	Acompanhe a execução da etapa até que o Status seja <img src="images/Imagem54.png" height='25'/>. Clique em <img src="images/Imagem55.png" height='25'/> de vez em quando para atualizar os registros.
+
+<img src="images/Imagem56.png" height='150'/>
+
+11. Verifique no bucket de dados, na pasta `output/spark` se o arquivo foi atualizado
+
+12.	Agora vamos adicionar uma etapa para o Hive
+
+13.	Clique em <img src="images/Imagem57.png" height='25'/> para adicionar mais uma etapa 
+
+14.	No popup configure a etapa como na imagem abaixo e clique em <img src="images/Imagem58.png" height='25'/>. O campo <img src="images/Imagem59.png" height='25'/> deve apontar para o script `hive_consulta_vacinas.hql` no bucket de deploy.
+
+
+<img src="images/Imagem60.png" height='250'/>
+
+15.	Acompanhe a execução da etapa até que o Status seja <img src="images/Imagem61.png" height='25'/>. Clique em <img src="images/Imagem62.png" height='25'/> de vez em quando para atualizar os registros.
+
+16.	Verifique na tabela do DynamoDB se os registros foram incluídos.
+
+## Finalização do Laboratório
+
+Termine o cluster do EMR para economizar recursos da sua conta.
 
 
 <div class="footer">
