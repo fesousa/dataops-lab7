@@ -46,7 +46,7 @@ if __name__ == "__main__":
                      .withColumnRenamed("vacina_nome","vacina")
 
     # AGRUPAR E CONTAR REGISTROS
-    vacinas = vacinas.groupBy("sexo", "municipio","uf", "data_aplicacao", "vacina").count()
+    vacinas = vacinas.groupBy("municipio","uf", "data_aplicacao", "vacina").count()
     vacinas = vacinas.withColumnRenamed("count","quantidade")
 
     vacinas.printSchema()
