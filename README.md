@@ -378,5 +378,5 @@ Termine o cluster do EMR para economizar recursos da sua conta.
     &copy; 2022 Fernando Sousa
     <br/>
     
-Last update: 2022-05-14 01:07:47
+Last update: 2022-05-14 01:10:37
 </div>
