@@ -29,10 +29,10 @@ if __name__ == "__main__":
     # REMOVER COLUNAS DESNECESSÁRIAS
     # DEIXAR APENAS AS COLUNAS QUE ESTÃO NA LISTA "colunas"
     colunas = [
-        "paciente_enumsexobiologico", 
+        "paciente_enumSexoBiologico", 
         "estabelecimento_municipio_nome",
         "estabelecimento_uf",  
-        "vacina_dataaplicacao", 
+        "vacina_dataAplicacao", 
         "dose", 
         "vacina_nome"
     ]
@@ -46,7 +46,7 @@ if __name__ == "__main__":
                      .withColumnRenamed("vacina_nome","vacina")
 
     # AGRUPAR E CONTAR REGISTROS
-    vacinas = vacinas.groupBy("municipio","uf", "data_aplicacao", "vacina").count()
+    vacinas = vacinas.groupBy("sexo","municipio","uf", "data_aplicacao", "vacina").count()
     vacinas = vacinas.withColumnRenamed("count","quantidade")
 
     vacinas.printSchema()
