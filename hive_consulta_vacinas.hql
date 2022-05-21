@@ -21,7 +21,7 @@ INSERT OVERWRITE TABLE vacinas_dynamo
 select 
     data_aplicacao, 
     IF(uf_list["AC"] is null, 0, uf_list["AC"]) as quantidade_ac,
-  IF(uf_list["RR"] is null, 0, uf_list["RR"]) as quantidade_rr  
+    IF(uf_list["RR"] is null, 0, uf_list["RR"]) as quantidade_rr  
 from (
     select 
         data_aplicacao, 
