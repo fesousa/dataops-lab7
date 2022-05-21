@@ -297,7 +297,6 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
 
 
     O script HQL faz o seguinte:
-    
     •	Aponta para o a base `vacinas_database`, criada no Glue e configurada durante a criação do EMR para ser utilizada no Hive
 
     •	Remove a tabela do Hive `vacinas_dynamo`, caso exista, que contém os dados de contagem de vacinas por estado e por data, processados pelo Hive
@@ -328,9 +327,7 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
     4.5. Na etapa de Implantação escolha Amazon S3
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Escolha o bucket de deploy criado na disciplina
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Em chave do objeto coloque deploy-emr. Essa será a pasta do S3 onde o arquivo será colocado
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Selecione a opção <img src="images/Imagem49.png" height='30'/>
 
 &nbsp;&nbsp;&nbsp;&nbsp;4.6. Depois de executado o pipeline verifique os objetos no bucket S3 de deploy, dentro da pasta `deploy-emr`
@@ -381,5 +378,5 @@ Termine o cluster do EMR para economizar recursos da sua conta.
     &copy; 2022 Fernando Sousa
     <br/>
     
-Last update: 2022-05-14 01:10:37
+Last update: 2022-05-21 00:45:02
 </div>
