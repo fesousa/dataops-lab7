@@ -180,7 +180,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
     4.2. Já conectado no EMR, instale o Git
 
     ```bash
-    yum install git
+    sudo yum install git
     ```
 
     4.3. Verifique a instalação do git
@@ -220,7 +220,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
     4.7. Execute o script pyspark `spark-etl-vacinas.py` com o comando `spark-submit`:
 
     ```bash
-    spark-submit spark-etl-vacinas.py s3://dataops-dados-nomesobrenome/input/ s3://dataops-impacta-dados-nomesobrenome/output/spark
+    spark-submit spark-etl-vacinas.py s3://dataops-dados-nomesobrenome/input/ s3://dataops-dados-nomesobrenome/output/spark
     ```
 
     Lembre-se de trocar `dataops-dados-nomesobrenome` pelo seu bucket de dados (bucket criado no [Laboratório 1](https://github.com/fesousa/dataops-lab1)). Os caminhos de bucket s3 que vem depois do nome do arquivo são os parâmetros do script. O primeiro é a origem dos dados (arquivo CSV com dados brutos) e o segundo é o destino (arquivo parquet transformado). Esses parâmetros são recebidos na variável `sys.argv` no código criado. Volte ao código e identifique o uso.
@@ -327,7 +327,9 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
     4.5. Na etapa de Implantação escolha Amazon S3
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Escolha o bucket de deploy criado na disciplina
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Em chave do objeto coloque deploy-emr. Essa será a pasta do S3 onde o arquivo será colocado
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Selecione a opção <img src="images/Imagem49.png" height='30'/>
 
 &nbsp;&nbsp;&nbsp;&nbsp;4.6. Depois de executado o pipeline verifique os objetos no bucket S3 de deploy, dentro da pasta `deploy-emr`
@@ -378,5 +380,5 @@ Termine o cluster do EMR para economizar recursos da sua conta.
     &copy; 2022 Fernando Sousa
     <br/>
     
-Last update: 2022-05-21 00:50:31
+Last update: 2022-10-28 23:04:07
 </div>
