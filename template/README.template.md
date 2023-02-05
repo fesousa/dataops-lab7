@@ -319,6 +319,7 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
     4.1. Defina um nome intuitivo para o pipeline
 
     4.2. Configure a Função de Serviço adequada
+    
 
     4.3. A origem do código deve ser o repositório `dataops-lab7`, criado neste laboratório
 
