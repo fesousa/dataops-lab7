@@ -76,13 +76,13 @@ Amazon EMR é o serviço da AWS que provisiona Hadoop MapReduce e outras soluç�
 
     5.1. Na tela de detalhes do cluster EMR (tela aberta depois que o cluster foi criado) procure pela seção `Rede e segurança` e identifique a propriedade `Grupo de segurança gerenciados do EMR` expandindo a opção `Grupos de segurança do EC2 (firewall)`
 
-    <img src="images/Imagem22.png" height='200'/>
+    <img src="images/Imagem22.png" width='100%'/>
 
     5.2. Clique no link que começa com `sg` para abrir o grupo de segurança (security group)
 
     5.3. Na nova tela, nas abas da parte inferior, selecione a aba `Regras de entrada`
 
-    <img src="images/Imagem25.png" height='200'/>
+    <img src="images/Imagem25.png" width='100%'/>
 
 
     5.4. Clique em `Editar regras de entrada`
@@ -293,61 +293,40 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
 
     3.2. Chave de partição: `data_aplicacao`
 
-4.	Crie um CodePipeline com as seguintes características (relembre o que já estudamos anteriormente)
-
-    4.1. Defina um nome intuitivo para o pipeline
-
-    4.2. Configure a Função de Serviço adequada
-    
-
-    4.3. A origem do código deve ser o repositório `dataops-lab7`, criado neste laboratório
-
-    4.4. Não tem etapa de compilação
-
-    4.5. Na etapa de Implantação escolha Amazon S3
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Escolha o bucket de deploy criado na disciplina
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Em chave do objeto coloque deploy-emr. Essa será a pasta do S3 onde o arquivo será colocado
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Selecione a opção <img src="images/Imagem49.png" height='30'/>
-
-&nbsp;&nbsp;&nbsp;&nbsp;4.6. Depois de executado o pipeline verifique os objetos no bucket S3 de deploy, dentro da pasta `deploy-emr`
-
-&nbsp;&nbsp;&nbsp;&nbsp;4.7. Se precisar relembrar alguma coisa do CodePipeline, verifique o [Laboratório 3](https://github.com/fesousa/dataops-lab3)
+4.	Envie os arquivos `hive_consulta_vacinas.hql` e `spark-etl-vacinas.py` para o bucket de deploy do seu ambiente
 
 5. Volte para o serviço EMR
 
 6. Abra o cluster criado (ClusterVacinas)
 
-7. Selecione a aba <img src="images/Imagem50.png" height='25'/>
+7. Selecione a aba `Etapas`
 
-8. Clique em <img src="images/Imagem51.png" height='25'/>
+8. Clique em `Adicionar etapa`
 
-9.	No popup configure a etapa como na imagem abaixo e clique em <img src="images/Imagem52.png" height='25'/>. Para o campo `Argumentos` coloque o seguinte comando para executar o código spark a partir do arquivo no S3. Não esqueça de trocar o nome do bucket pelo seu bucket.
+9.	Na nova tela configure a etapa como na imagem abaixo e clique em `Adicionar etapa`. Para o campo `Argumentos` coloque o seguinte comando para executar o código spark a partir do arquivo no S3. Não esqueça de trocar o nome do bucket pelo bucket onde está o código hive e o bucket onde estão os dados de origem e onde será salvo o resultado
 
 ```bash
 spark-submit s3://deploy-nomesobrenome-idconta-us-east-1/deploy-emr/spark-etl-vacinas.py s3://dataops-dados-nomesobrenome/input/ s3://dataops-dados-nomesobrenome/output/spark
 ```
 
-<img src="images/Imagem53.png" height='250'/>
+<img src="images/Imagem53.png" width='100%'/>
 
-10.	Acompanhe a execução da etapa até que o Status seja <img src="images/Imagem54.png" height='25'/>. Clique em <img src="images/Imagem55.png" height='25'/> de vez em quando para atualizar os registros.
+10.	Acompanhe a execução da etapa até que o Status seja `Completed`. Clique em <img src="images/Imagem55.png" height='25'/> de vez em quando para atualizar os registros.
 
-<img src="images/Imagem56.png" height='150'/>
+<img src="images/Imagem56.png" width='100%'/>
 
 11. Verifique no bucket de dados, na pasta `output/spark` se o arquivo foi atualizado
 
 12.	Agora vamos adicionar uma etapa para o Hive
 
-13.	Clique em <img src="images/Imagem57.png" height='25'/> para adicionar mais uma etapa 
+13.	Clique em `Adicionar etapa` para adicionar mais uma etapa 
 
-14.	No popup configure a etapa como na imagem abaixo e clique em <img src="images/Imagem58.png" height='25'/>. O campo <img src="images/Imagem59.png" height='25'/> deve apontar para o script `hive_consulta_vacinas.hql` no bucket de deploy.
+14.	Na nova tela configure a etapa como na imagem abaixo e clique em `Adicionar etapa`. O campo `Local do script do Hive` deve apontar para o script `hive_consulta_vacinas.hql` no bucket de deploy.
 
 
-<img src="images/Imagem60.png" height='250'/>
+<img src="images/Imagem60.png" width="100%"/>
 
-15.	Acompanhe a execução da etapa até que o Status seja <img src="images/Imagem61.png" height='25'/>. Clique em <img src="images/Imagem62.png" height='25'/> de vez em quando para atualizar os registros.
+15.	Acompanhe a execução da etapa até que o Status seja `Completed`. Clique em <img src="images/Imagem55.png" height='25'/> de vez em quando para atualizar os registros.
 
 16.	Verifique na tabela do DynamoDB se os registros foram incluídos.
 
