@@ -28,127 +28,104 @@ Amazon EMR é o serviço da AWS que provisiona Hadoop MapReduce e outras soluç�
 
 1. Procure na barra superior pelo serviço `EMR` e clique no serviço para abrir
 
-2.	No menu ao lado esquerdo clique em <img src="images/Imagem2.png" height='25'/>
-
-3.	Clique no botão <img src="images/Imagem3.png" height='25'/> que aparece na parte superior para iniciar a criação de um novo cluster EMR
-
-4.	Na tela de criação do cluster, clique no link <img src="images/Imagem4.png" height='25'/>
-
-5.	O primeiro passo é configurar os softwares (Step 1: Software e etapas)
-
-6.	Em <img src="images/Imagem5.png" height='25'/> selecione as opções:
-
-    a. <img src="images/Imagem6.png" height='25'/>	  
-
-    b. <img src="images/Imagem7.png" height='25'/>
-
-    c. <img src="images/Imagem8.png" height='25'/>
-
-    d. <img src="images/Imagem9.png" height='25'/>
-
-Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que a versão seja diferente
-
-<img src="images/Imagem10.png" height='200'/>
+2.	No menu ao lado esquerdo clique em `Clusters`
 
 
-7. Em <img src="images/Imagem11.png" height='25'/> selecione as duas opções disponíveis para importar o catálogo de dados do Glue
+3. Crie um cluster EMR com as seguintes configurações:
 
-<img src="images/Imagem12.png" height='130'/>
+    3.1. `Nome`: `ClusterVacinas`
 
-8. Va até o final da página e clique em <img src="images/Imagem13.png" height='25'/>
+    3.2. Em `Pacotes de Serviços` selecione os serviços da imagem abaixo (o número da versão pode ser diferente):
 
-9.	A próximo passo é a configuração do Hardware (Step2: Hardware). 
+    <img src="images/Imagem10.png" width='100%'/>
 
-    9.1. Na seção <img src="images/Imagem14.png" height='25'/> clique nas opções `Spot` na última coluna para os nós `Principal` e `Serviços`. Assim economizaremos com a execução de instâncias EC2 para o cluster EMR.
-    A configuração cria 1 nó principal (master) e 2 nós de serviço (core). O nó principal distribui as tarefas e os nós de serviço são responsáveis por executá-las.
+    3.3. Em `Configurações do Catálogo de Dados do AWS Glue` selecione as duas opções
 
-    <img src="images/Imagem15.png" height='300'/>
+    <img src="images/Imagem12.png" width='100%'/>
 
-    9.2. Clique em <img src="images/Imagem16.png" height='25'/> no final da página
 
-10.	Na próxima tela (Step 3 – Configurações gerais do cluster), configure o seguinte:
+    3.4. Em `Grupos de instâncias` escolha uma instância do tipo `m4.large` para os nós `Primário`, `Núcleo` e `Tarefa 1 de 1`
 
-    10.1. Nome do cluster: `ClusterVacinas`
+    <img src="images/Imagem64.png" width='100%'/>
 
-    10.2. Clique em <img src="images/Imagem17.png" height='25'/>
+    <img src="images/Imagem65.png" width='100%'/>
 
-11.	Na próxima tela (Step 4 - Segurança), em <img src="images/Imagem63.png" height='25'/> selecione <img src="images/Imagem18.png" height='25'/>
+    <img src="images/Imagem66.png" width='100%'/>
 
-12.	Clique em <img src="images/Imagem19.png" height='25'/>
 
-13.	 Aguarde até que o cluster seja criado, quando o status estiver mostrando `Aguardando`. Clique em <img src="images/Imagem20.png" height='25'/> no canto superior direito, de vez em quando, para atualizar. O processo pode levar até 20 minutos.
+    3.5. Na seção `Configuração de segurança e par de chaves do EC2 - opcional`, em `Par de chaves do Amazon EC2 para o SSH do cluster` escolha a `vockey`
 
-<img src="images/Imagem21.png" height='300'/>
+    <img src="images/Imagem68.png" width='100%'/>
 
-14.	Enquanto o cluster inicia vamos configurar o grupo de segurança para poder acessar a instância principal do cluster EMR a partir de uma conexão SSH no CloudShell
+    3.6. Na seção `Perfil de serviço do Amazon EMR` em `Função de serviço` escolha `EMR_DefaulRole`
 
-    14.1. Na tela de detalhes do cluster EMR (tela aberta depois que o cluster foi criado) procure pela seção "Segurança e acesso" e identifique a propriedade "“"Grupos de segurança para o Principal"
+    <img src="images/Imagem69.png" width='100%'/>
+
+    3.7. Na seção `Perfil de instância do EC2 para o Amazon EMR` em `Função de serviço` escolha `EMR_EC2_DefaulRole`
+
+    <img src="images/Imagem70.png" width='100%'/>
+
+    3.8. Clique em `Criar cluster`
+
+4. O cluster será iniciado. Aguarde até que o status `Aguardando` apareça
+
+<img src="images/Imagem71.png" width='100%'/>
+
+
+5.	Enquanto o cluster inicia vamos configurar o grupo de segurança para poder acessar a instância principal do cluster EMR a partir de uma conexão SSH no CloudShell
+
+    5.1. Na tela de detalhes do cluster EMR (tela aberta depois que o cluster foi criado) procure pela seção `Rede e segurança` e identifique a propriedade `Grupo de segurança gerenciados do EMR` expandindo a opção `Grupos de segurança do EC2 (firewall)`
 
     <img src="images/Imagem22.png" height='200'/>
 
-    14.2. Clique no link ao lado da propriedade, que começa com sg- para abrir o grupo de segurança (security group)
+    5.2. Clique no link que começa com `sg` para abrir o grupo de segurança (security group)
 
-    14.3. Na nova tela identifique o grupo de segurança com o valor `ElasticMapReduce-master` na coluna `Nome do grupo de segurança`. Clique no checkbox para selecioná-lo
-
-    <img src="images/Imagem23.png" height='200'/>
-
-
-    14.4. Nas abas da parte inferior, selecione a aba <img src="images/Imagem24.png" height='25'/>
+    5.3. Na nova tela, nas abas da parte inferior, selecione a aba `Regras de entrada`
 
     <img src="images/Imagem25.png" height='200'/>
 
 
-    14.5. Clique em <img src="images/Imagem26.png" height='25'/>
+    5.4. Clique em `Editar regras de entrada`
 
-    14.6. Na nova tela, clique em <img src="images/Imagem27.png" height='25'/>
+    5.5. Na nova tela, clique em `Adicionar regra`
 
-    14.7. Na nova regra habilite a porta 22 (SSH) com as seguintes configurações:
+    5.6. Na nova regra habilite a porta 22 (SSH) com as seguintes configurações:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Intervalo de portas: 22
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Origem: <img src="images/Imagem28.png" height='25'/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Origem: `Qualquer local-IPv4`
 
-&nbsp;&nbsp;&nbsp;&nbsp;14.8. Clique novamente em <img src="images/Imagem29.png" height='25'/> para adicionar mais uma regra
+&nbsp;&nbsp;&nbsp;&nbsp;5.7. Clique em  `Salvar regras`
 
-&nbsp;&nbsp;&nbsp;&nbsp;14.9. Na nova regra habilite a porta 9443 com as seguintes configurações:
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/Imagem32.png" width='100%'/>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.	Intervalo de portas: 9443
+6.	Volte para o EMR e veja se já está com o status `Aguardando`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.	Origem: <img src="images/Imagem30.png" height='25'/>
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obs: Habilitando a regra somente para `Meu IP`, será retornado o IP atual da sua re-de. Caso não consiga conectar no Jupyter Notebook nas próximas partes do lab, faça o procedimento de liberar a porta 9443 novamente, para pegar seu novo IP
-
-&nbsp;&nbsp;&nbsp;&nbsp;14.10. Clique em  <img src="images/Imagem31.png" height='25'/>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/Imagem32.png" height='180'/>
-
-15.	Volte para o EMR e veja se já está com o status `Aguardando`
-
-<img src="images/Imagem33.png" height='80'/>
+<img src="images/Imagem33.png" height='300'/>
  
-16.	Para finalizar, conecte na instância utilizando o CloudShell. Siga os passos abaixo, se ficar alguma dúvida consulte o [Laboratório 4](https://github.com/fesousa/dataops-lab4) para mais detalhes
+7.	Conecte na instância utilizando o CloudShell. Siga os passos abaixo, se ficar alguma dúvida consulte o [Laboratório 4](https://github.com/fesousa/dataops-lab4) para mais detalhes
 
-    16.1. Ainda no EMR, copie o endereço da propriedade `DNS público principal`. Deve ser algo parecido com o seguinte: `ec2-52-55-234-193.compute-1.amazonaws.com`
+    16.1. Ainda no EMR, copie o endereço da propriedade `DNS público do nó primário`. Deve ser algo parecido com o seguinte: `ec2-52-55-234-193.compute-1.amazonaws.com`
 
     <img src="images/Imagem34.png" height='250'/>
  
-    16.2. No console da AWS acesse ao CloudShell clicando em <img src="images/Imagem35.png" height='25'/> na barra superior
+    7.2. No console da AWS acesse ao CloudShell clicando em <img src="images/Imagem35.png" height='25'/> na barra superior
 
-    16.3. Aguarde o terminal ser iniciado e verifique se o arquivo `labsuser.pem` existe executando o comando `ls`
+    7.3. Aguarde o terminal ser iniciado e verifique se o arquivo `labsuser.pem` existe executando o comando `ls`
 
     <img src="images/Imagem36.png" height='130'/>
  
     Caso não tenha o arquivo, veja no [Laboratório 4](https://github.com/fesousa/dataops-lab4)como fazer o upload.
 
-    16.4. Acesso o cluster do EMR via SSH, similar como fez para conectar na instância EC2 do Jenkins. O comando é o seguinte:
+    7.4. Acesso o cluster do EMR via SSH, similar como fez para conectar na instância EC2 do Jenkins. O comando é o seguinte:
 
     ```bash
     ssh -i labsuser.pem hadoop@<DNS_EMR>
     ```
 
-    Troque `<DNS_EMR>` pelo endereço copiado no passo 16.1
+    Troque `<DNS_EMR>` pelo endereço copiado nos passos anteeriores
 
-    16.5. Depois de executado o comando, digite `yes` para confirma a conexão
+    7.5. Depois de executado o comando, digite `yes` para confirma a conexão
 
     <img src="images/Imagem37.png" height='170'/>
  
@@ -159,7 +136,7 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
 ## Executar ETL com Spark no EMR
 
-1.	No VS Code, crie uma pasta lab7 na sua pasta de projetos da disciplina
+1.	Abra seu ambiente Cloud9, crie uma pasta lab7 na sua pasta de projetos da disciplina
 
 2.	Na pasta lab7 crie um arquivo chamado `spark-etl-vacinas.py` e coloque o código abaixo. É um código python que utiliza o pyspark para fazer um processo de ETL com os dados de vacinas que estão no S3:
     
@@ -169,7 +146,69 @@ Mantenha os que já estavam selecionados (Hadoop, Hive, Hue e Pig). Pode ser que
 
     2.3. Dalva os dados transformados no formato parquet no S3 (load)
 
-    https://github.com/fesousa/dataops-lab7/blob/854f30cbcf24cf53d327b78d7789fc3424d1ba8b/spark-etl-vacinas.py#L1-L59
+```py
+import sys
+from datetime import datetime
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import *
+
+if __name__ == "__main__":
+
+    # INICIAR SESSÃO SPARK
+    spark = SparkSession\
+        .builder\
+        .appName("SparkETL")\
+        .getOrCreate()
+
+    # LER ARQUIVOS DO S3 ENVIADO COMO PARÂMETRO
+    vacinas = spark.read\
+                   .option("inferSchema", "true")\
+                   .option("header", "true")\
+                   .option("sep",";")\
+                   .csv(sys.argv[1])    
+
+    # TRANSOFRMAÇÃO DA COLUNA DE DOSE DA VACINA
+    vacinas = vacinas.withColumn(
+        "dose", when(vacinas.vacina_descricao_dose.contains('1'), '1')
+        .when(vacinas.vacina_descricao_dose.contains('2'), '2')
+        .otherwise('Única')
+    )
+
+    # REMOVER COLUNAS DESNECESSÁRIAS
+    # DEIXAR APENAS AS COLUNAS QUE ESTÃO NA LISTA "colunas"
+    colunas = [
+        "paciente_enumSexoBiologico", 
+        "estabelecimento_municipio_nome",
+        "estabelecimento_uf",  
+        "vacina_dataAplicacao", 
+        "dose", 
+        "vacina_nome"
+    ]
+    vacinas = vacinas.select([column for column in vacinas.columns if column in colunas])
+
+    # RENOMEAR COLUNAS
+    vacinas = vacinas.withColumnRenamed("paciente_enumSexoBiologico","sexo")\
+                     .withColumnRenamed("estabelecimento_municipio_nome","municipio")\
+                     .withColumnRenamed("estabelecimento_uf","uf")\
+                     .withColumnRenamed("vacina_dataAplicacao","data_aplicacao")\
+                     .withColumnRenamed("vacina_nome","vacina")
+
+    # AGRUPAR E CONTAR REGISTROS
+    vacinas = vacinas.groupBy("sexo","municipio","uf", "data_aplicacao", "vacina").count()
+    vacinas = vacinas.withColumnRenamed("count","quantidade")
+
+    vacinas.printSchema()
+
+    print(vacinas.head())
+
+    print("Quantidade de registros: " + str(vacinas.count()))
+
+    # SALVAR NO S3 NO FORMATO PARQUET
+    vacinas.write.mode("overwrite").parquet(sys.argv[2])
+
+# spark-submit spark-etl-vacinas.py s3://dataops-impacta-dados-fernandosousa/input/ s3://dataops-impacta-dados-fernandosousa/output/spark
+```
 
 3.	Crie um novo repositório (dataops-lab7) no seu Github e envie o arquivo para o repositório na branch principal (lembre-se dos passos seguidos em labs anteriores)
 
@@ -279,7 +318,7 @@ select estabelecimento_uf, count(1) from vacinas_input group by estabelecimento_
 
 5.	Por estar utilizando o Data Catalog do Glue, quando os dados mudam na origem, a consulta em qualquer outra ferramenta que utiliza o catálogo, vai retornar os dados atualizados. Faça o teste:
 
-    5.1. Execute a função lambda de coleta criada no [Laboratório 4](https://github.com/fesousa/dataops-lab4) para coletar os dados de Roraima (RR) deste link: https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/SIPNI/COVID/uf/uf%3DRR/part-00000-a02ab466-c323-4420-85f1-e51e77685fe4.c000.csv. Consulte o  [Laboratório 4](https://github.com/fesousa/dataops-lab4) para relembrar como enviar os parâmetros.
+    5.1. Execute a função lambda de coleta criada no [Laboratório 4](https://github.com/fesousa/dataops-lab4) para coletar os dados de Roraima (RR) que estão neste link: https://opendatasus.saude.gov.br/dataset/covid-19-vacinacao/resource/5093679f-12c3-4d6b-b7bd-07694de54173. Consulte o  [Laboratório 4](https://github.com/fesousa/dataops-lab4) para relembrar como enviar os parâmetros.
 
     5.2. Quando a função terminar, volte ao CloudShell para executar novamente a última consulta (quantidade de registros por UF) e veja o novo resultado, com os dados de Roraima.
 
@@ -319,6 +358,7 @@ O EMR consegue ser programado para executar etapas de operações de ETL a parti
     4.1. Defina um nome intuitivo para o pipeline
 
     4.2. Configure a Função de Serviço adequada
+    
 
     4.3. A origem do código deve ser o repositório `dataops-lab7`, criado neste laboratório
 
@@ -380,5 +420,5 @@ Termine o cluster do EMR para economizar recursos da sua conta.
     &copy; 2022 Fernando Sousa
     <br/>
     
-Last update: 2022-10-28 23:04:07
+Last update: 2023-10-12 18:59:22
 </div>
